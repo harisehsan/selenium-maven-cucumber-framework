@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 		features = "src/test/resources/features/GherkinFiles",
-		tags="@test_scenario",
+		tags="@eurowings_automation",
 		glue = {"stepdefinitions"},
 		plugin = {
 				"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm",

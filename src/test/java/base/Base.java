@@ -76,12 +76,7 @@ public class Base extends BaseUtil {
        return (Integer.parseInt(price.replaceAll("\\D+", "").replace("£", "").replace(",", "")));
     }
 
-    public void takeScreenShot() throws IOException {
-            TakesScreenshot scrShot =((TakesScreenshot)driver);
-            File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-            File DestFile=new File("screenshots\\screenshot.png");
-            FileUtils.copyFile(SrcFile, DestFile);
-    }
+
 
     protected void waitUntilVisible(WebElement ele, Duration DEFAULT_TIMEOUT) {
         new WebDriverWait(driver, DEFAULT_TIMEOUT).until(ExpectedConditions.visibilityOf(ele));
@@ -94,6 +89,11 @@ public class Base extends BaseUtil {
 
     protected void scrollToView(WebElement ele) throws InterruptedException {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", ele);
+    }
+
+    public WebElement customeDate(String Date)
+    {
+      return driver.findElement(By.cssSelector("input[value='2023-02-16']"));
     }
 
     public boolean elementExist(List<WebElement> ele)

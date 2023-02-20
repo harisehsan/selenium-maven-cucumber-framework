@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import base.Base;
 import base.BaseUtil;
 import base.ScreenRecorderUtil;
 import cucumber.api.Scenario;
@@ -7,14 +8,19 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.File;
+import java.io.IOException;
 
 
 public class Hooks extends BaseUtil {
 
     private String scenarioName;
     private BaseUtil base;
+
+
 
 
     public Hooks(BaseUtil base) {
@@ -37,17 +43,24 @@ public class Hooks extends BaseUtil {
     @After
     public void TearDownTest(Scenario scenario) throws Exception {
         try {
+            takeScreenShot();
             ScreenRecorderUtil.stopRecord();
             driver.quit();
 //        if (scenario.isFailed()) {
 
 //        }
-            Allure.addAttachment("Boundary prices: ",FileUtils.openInputStream(new File("text-files\\Boundary_price.txt")));
             Allure.addAttachment("Screenshot: ",FileUtils.openInputStream(new File("screenshots\\screenshot.png")));
             Allure.addAttachment("Scenario Video: ",FileUtils.openInputStream(new File("test-recordings\\Video.mp4")));
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void takeScreenShot() throws IOException {
+        TakesScreenshot scrShot =((TakesScreenshot)driver);
+        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+        File DestFile=new File("screenshots\\screenshot.png");
+        FileUtils.copyFile(SrcFile, DestFile);
     }
 }
